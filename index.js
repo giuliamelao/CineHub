@@ -9,6 +9,9 @@ app.use(express.urlencoded({ extended: false}))
 MoviesRouter = require('./routes/movies')
 app.use('/movies', MoviesRouter)
 
+LoginRouter = require('./routes/login')
+app.use('/', LoginRouter)
+
 
 app.get('/', (req, res) => {
   res.send('Hello, World! 🌟');

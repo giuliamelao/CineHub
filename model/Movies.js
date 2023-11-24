@@ -3,17 +3,18 @@ let movies = [];
 
 module.exports = {
         save(title, year, director, genre) {
-                let obj = {id: ++ids, title: title, director: director, genre: genre}
+                let obj = {id: ++ids, title: title, year: year, director: director, genre: genre}
                 movies.push(obj)
                 return obj
         },
         update(id, title, year, director, genre) {
                 let pos = this.getPositionById(id)
                 if (pos>= 0) {
-                        let obj = {id: id, title: title, director: director, genre: genre}
+                        let obj = {id: id, title: title, year: year, director: director, genre: genre}
                         movies[pos] = obj
+                        return movies[pos]
                 }
-                return movies[pos]
+                return null
         },
         list(){
                 return movies
