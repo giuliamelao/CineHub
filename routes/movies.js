@@ -4,6 +4,14 @@ const router = express.Router()
 const Auth = require('../helpers/Auth')
 const MoviesModel = require('../model/Movies')
 
+
+const {sequelize} = require('../model/bd')
+
+router.get('/install', async function(req, res, next) {
+        await sequelize.sync({force: true})
+        res.json({mensagem: "Hello Giulia 🦊🦝"})
+})
+
 router.get('/', (req, res) => {
         let list = MoviesModel.list()
 
