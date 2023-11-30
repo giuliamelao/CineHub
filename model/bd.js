@@ -5,45 +5,33 @@ const sequelize = new Sequelize({
         storage: './database.sqlite'
 })
 
-const ModeradorModel = sequelize.define('Moderador', {
-        mod_id: {
-                type: DataTypes.INTEGER,
-                autoIncrement: true,
-                primaryKey: true
-        },
-        nome: {
-                type: DataTypes.STRING,
-                allowNull: false
-        },
-        username: {
-                type: DataTypes.STRING,
-                allowNull: false
-        },
-        password: {
-                type: DataTypes.STRING,
-                allowNull: false
-        }
-})
+
 
 const UserModel = sequelize.define('User', {
-        user_id: {
-                type: DataTypes.INTEGER,
-                autoIncrement: true,
-                primaryKey: true
+        id: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
         },
         nome: {
-                type: DataTypes.STRING,
-                allowNull: false
+            type: DataTypes.STRING,
+            allowNull: false,
         },
         username: {
-                type: DataTypes.STRING,
-                allowNull: false
+            type: DataTypes.STRING,
+            allowNull: false,
         },
         password: {
-                type: DataTypes.STRING,
-                allowNull: false
-        }
-})
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        role: {
+            type: DataTypes.ENUM('admin', 'moderator', 'user'),
+            defaultValue: 'user',
+        },
+    });
+    
+
 
 const MovieModel = sequelize.define('Movie', {
         movie_id: {
@@ -98,7 +86,6 @@ ReviewModel.belongsTo(MovieModel);
 
 module.exports = {
         sequelize: sequelize,
-        ModeradorModel: ModeradorModel,
         UserModel: UserModel,
         MovieModel: MovieModel,
         ReviewModel: ReviewModel
