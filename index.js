@@ -9,28 +9,40 @@ app.use(express.urlencoded({ extended: false}))
 const { UserModel } = require('./model/bd');
 
 async function createAdminUser() {
-    try {
-        await UserModel.create({
-            nome: 'Admin',
-            username: 'admin',
-            password: 'admin',
-            role: 'admin',
-        });
-        console.log('Admin user created successfully.');
-    } catch (error) {
-        console.error('Error creating admin user:', error);
-    }
+  try {
+      const findAdmin = await UserModel.findOne({
+          where: { role: 'admin' },
+      });
+
+      if (!findAdmin) {
+          // Admin doesn't exist so create one
+          await UserModel.create({
+              nome: 'Admin',
+              username: 'admin',
+              password: 'admin',
+              role: 'admin',
+          });
+
+          console.log('Admin created successfully.');
+      } else {
+          console.log('Admin already exists.');
+      }
+  } catch (error) {
+      console.error('Error creating admin:', error);
+  }
 }
 
 createAdminUser();
 
-
+InstallRouter = require('./routes/install');
+app.use(InstallRouter);
 
 MoviesRouter = require('./routes/movies')
 app.use('/movies', MoviesRouter)
 
 LoginRouter = require('./routes/login')
-app.use('/', LoginRouter)
+app.use('/login', LoginRouter)
+
 
 app.use(function(err, req, res, next) {
   res.locals.message = err.message;
@@ -43,7 +55,7 @@ app.use(function(err, req, res, next) {
 
 
 app.get('/', (req, res) => {
-  res.send('Hello, World! 🌟');
+  res.send('Hello, CineHub! 🌟');
 });
 
 app.listen(port, () => {
