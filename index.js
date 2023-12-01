@@ -36,6 +36,9 @@ createAdminUser();
 InstallRouter = require('./routes/install');
 app.use(InstallRouter);
 
+AdminRouter = require('./routes/admin');
+app.use(AdminRouter);
+
 MoviesRouter = require('./routes/movies')
 app.use('/movies', MoviesRouter)
 
