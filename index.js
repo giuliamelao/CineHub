@@ -15,7 +15,6 @@ async function createAdminUser() {
       });
 
       if (!findAdmin) {
-          // Admin doesn't exist so create one
           await UserModel.create({
               nome: 'Admin',
               username: 'admin',
@@ -41,7 +40,10 @@ MoviesRouter = require('./routes/movies')
 app.use('/movies', MoviesRouter)
 
 LoginRouter = require('./routes/login')
-app.use('/login', LoginRouter)
+app.post('/login', LoginRouter)
+
+const SignupRouter = require('./routes/signup');
+app.post('/signup', SignupRouter);
 
 
 app.use(function(err, req, res, next) {
