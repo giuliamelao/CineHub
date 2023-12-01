@@ -6,6 +6,26 @@ const port = 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: false}))
 
+const { UserModel } = require('./model/bd');
+
+async function createAdminUser() {
+    try {
+        await UserModel.create({
+            nome: 'Admin',
+            username: 'admin',
+            password: 'admin',
+            role: 'admin',
+        });
+        console.log('Admin user created successfully.');
+    } catch (error) {
+        console.error('Error creating admin user:', error);
+    }
+}
+
+createAdminUser();
+
+
+
 MoviesRouter = require('./routes/movies')
 app.use('/movies', MoviesRouter)
 

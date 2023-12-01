@@ -9,7 +9,7 @@ const {sequelize} = require('../model/bd')
 
 router.get('/install', async function(req, res, next) {
         await sequelize.sync({force: true})
-        res.json({mensagem: "Hello Giulia 🦊🦝"})
+        res.json({mensagem: "Hello Giulia 🦊🦝, database updated"})
 })
 
 router.get('/', (req, res) => {
