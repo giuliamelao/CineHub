@@ -8,30 +8,7 @@ app.use(express.urlencoded({ extended: false}))
 
 const { UserModel } = require('./model/bd');
 
-async function createAdminUser() {
-  try {
-      const findAdmin = await UserModel.findOne({
-          where: { role: 'admin' },
-      });
 
-      if (!findAdmin) {
-          await UserModel.create({
-              nome: 'Admin',
-              username: 'admin',
-              password: 'admin',
-              role: 'admin',
-          });
-
-          console.log('Admin created successfully.');
-      } else {
-          console.log('Admin already exists.');
-      }
-  } catch (error) {
-      console.error('Error creating admin:', error);
-  }
-}
-
-createAdminUser();
 
 InstallRouter = require('./routes/install');
 app.use(InstallRouter);
