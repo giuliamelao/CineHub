@@ -13,6 +13,12 @@ const { UserModel } = require('./model/bd');
 InstallRouter = require('./routes/install');
 app.use(InstallRouter);
 
+ModRouter = require('./routes/mod');
+app.use(ModRouter);
+
+UserRouter = require('./routes/user');
+app.use(UserRouter);
+
 AdminRouter = require('./routes/admin');
 app.use(AdminRouter);
 
