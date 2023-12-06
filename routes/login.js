@@ -17,7 +17,7 @@ router.post('/login', async (req, res) => {
             return res.status(403).json({ logged: false, message: 'Invalid username or password' });
         }
 
-        let token = jwt.sign({ user: user.username, role: user.role }, '123456', {expiresIn: '30min'});
+        let token = jwt.sign({ user: user.username, role: user.role }, '123456', {expiresIn: '2d'});
         res.json({logged: true, token: token})
 
     } catch (error) {

@@ -3,8 +3,6 @@ const router = express.Router();
 const Auth = require('../helpers/Auth');
 const { MovieModel, UserModel } = require('../model/bd');
 
-const Auth = require('../helpers/Auth');
-
 
 router.get('/user-page', Auth.validator, (req, res) => {
     res.json({ message: 'Welcome to the User Page! 🎬 Here you can view the movie list and leave a note or review!' });

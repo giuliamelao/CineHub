@@ -3,9 +3,6 @@ const router = express.Router();
 const Auth = require('../helpers/Auth');
 const { MovieModel } = require('../model/bd');
 
-const Auth = require('../helpers/Auth');
-
-
 
 router.get('/mod-page', Auth.validator, (req, res) => {
     res.json({ message: 'Welcome to the Mod Page! 🎬 Here you can manage Movies. (you may delete users if you wish)' });
@@ -58,7 +55,14 @@ router.put('/mod-page/edit-user-info/:id', Auth.isAdmin, async (req, res) => {
 
 router.get('/mod-page/movies', Auth.validator, async (req, res) => {
         try {
-            const movies = await MovieModel.findAll();
+            const { limit, page } = req.body;
+            const offset = (page - 1) * limit;
+
+            const movies = await MovieModel.findAll({
+                limit: parseInt(limit),
+                offset: offset,
+            });
+
             res.json({ movies });
         } catch (error) {
             console.error('Error getting all movies: ', error);
