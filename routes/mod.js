@@ -3,12 +3,15 @@ const router = express.Router();
 const Auth = require('../helpers/Auth');
 const { MovieModel } = require('../model/bd');
 
+const Auth = require('../helpers/Auth');
+
+
 
 router.get('/mod-page', Auth.validator, (req, res) => {
     res.json({ message: 'Welcome to the Mod Page! 🎬 Here you can manage Movies. (you may delete users if you wish)' });
 });
 
-router.delete('/mod-page/delete-user/:id', authenticateUser, async (req, res) => {
+router.delete('/mod-page/delete-user/:id', Auth.validator, async (req, res) => {
         try {
                 const userId = req.params.id;
                 const deletedUser = await UserModel.destroy({
@@ -29,10 +32,31 @@ router.delete('/mod-page/delete-user/:id', authenticateUser, async (req, res) =>
         }
 });
 
+router.put('/mod-page/edit-user-info/:id', Auth.isAdmin, async (req, res) => {
+        try {
+                const userId = req.params.id;
+                const { password, nome } = req.body;
+
+                const updateUser = await UserModel.update(
+                        { password, nome },
+                        { where: { id: userId } }
+                );
+
+                if (updateUser[0]) {
+                        res.json({ mensagem: 'User updated successfully!' });
+                } else {
+                        res.status(404).json({ mensagem: 'User not found' });
+                }
+        } catch (error) {
+                console.error('Error updating user:', error);
+                res.status(500).json({ mensagem: 'Error updating user' });
+        }
+});
+
 /////////
 
 
-router.get('/mod-page/movies', authenticateUser, async (req, res) => {
+router.get('/mod-page/movies', Auth.validator, async (req, res) => {
         try {
             const movies = await MovieModel.findAll();
             res.json({ movies });
@@ -42,7 +66,7 @@ router.get('/mod-page/movies', authenticateUser, async (req, res) => {
         }
 });
     
-router.post('/mod-page/add-movie', authenticateUser, async (req, res) => {
+router.post('/mod-page/add-movie', Auth.validator, async (req, res) => {
         try {
                 const { title, year, director, genre } = req.body;
                 const newMovie = await MovieModel.create({ title, year, director, genre });
@@ -53,7 +77,7 @@ router.post('/mod-page/add-movie', authenticateUser, async (req, res) => {
         }
 });
     
-router.put('/mod-page/edit-movie/:id', authenticateUser, async (req, res) => {
+router.put('/mod-page/edit-movie/:id', Auth.validator, async (req, res) => {
         try {
                 const movieId = req.params.id;
                 const { title, year, director, genre } = req.body;
@@ -74,7 +98,7 @@ router.put('/mod-page/edit-movie/:id', authenticateUser, async (req, res) => {
         }
 });
     
-router.delete('/mod-page/delete-movie/:id', authenticateUser, async (req, res) => {
+router.delete('/mod-page/delete-movie/:id', Auth.validator, async (req, res) => {
         try {
                 const movieId = req.params.id;
                 const deletedMovie = await MovieModel.destroy({ where: { movie_id: movieId } });
