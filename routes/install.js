@@ -1,14 +1,15 @@
 const express = require('express')
 const router = express.Router()
 
-const {sequelize} = require('../model/bd')
+const {sequelize, MovieModel} = require('../model/bd')
+
 
 router.get('/install', async function(req, res, next) {
         await sequelize.sync({force: true})
         res.json({mensagem: "Hello Giulia 🦊🦝, database updated"})
 })
 
-const { UserModel } = require('./model/bd');
+const { UserModel } = require('../model/bd');
 
 async function createAdminUser() {
         try {
@@ -105,10 +106,95 @@ async function createUsers() {
         }
     }
     
+    async function createMovies() {
+        try {
+            const findMovie1 = await MovieModel.findOne({
+                where: { title: 'Laranja Mecânica' },
+            });
+            if (!findMovie1) {
+                await MovieModel.create({
+                    title: 'Laranja Mecânica',
+                    year: '1971',
+                    director: 'Stanley Kubrick',
+                    genre: 'Thriller'
+                });
+      
+                console.log('Movie1 created successfully.');
+            } else {
+                console.log('Movie1 already exists.');
+            }
 
+            const findMovie2 = await MovieModel.findOne({
+                where: { title: 'Handmaiden' },
+            });
+            if (!findMovie2) {
+                await MovieModel.create({
+                    title: 'Handmaiden',
+                    year: '2016',
+                    director: 'Park Chan-wook',
+                    genre: 'Drama'
+                });
+      
+                console.log('Movie2 created successfully.');
+            } else {
+                console.log('Movie2 already exists.');
+            }
+
+            const findMovie3 = await MovieModel.findOne({
+                where: { title: 'Van Helsing' },
+            });
+            if (!findMovie3) {
+                await MovieModel.create({
+                    title: 'Van Helsing',
+                    year: '2004',
+                    director: 'Stephen Sommers',
+                    genre: 'Horror'
+                });
+      
+                console.log('Movie3 created successfully.');
+            } else {
+                console.log('Movie3 already exists.');
+            }
+
+            const findMovie4 = await MovieModel.findOne({
+                where: { title: 'Her' },
+            });
+            if (!findMovie4) {
+                await MovieModel.create({
+                    title: 'Her',
+                    year: '2013',
+                    director: 'Spike Jonze',
+                    genre: 'Drama'
+                });
+      
+                console.log('Movie4 created successfully.');
+            } else {
+                console.log('Movie4 already exists.');
+            }
+
+            const findMovie5 = await MovieModel.findOne({
+                where: { title: 'Insidious' },
+            });
+            if (!findMovie5) {
+                await MovieModel.create({
+                    title: 'Insidious',
+                    year: '2010',
+                    director: 'James Wan',
+                    genre: 'Horror'
+                });
+      
+                console.log('Movie5 created successfully.');
+            } else {
+                console.log('Movie5 already exists.');
+            }
+        } catch (error) {
+            console.error('Error creating Movie5:', error);
+        }
+}
 
 createAdminUser();
 createMods();
 createUsers();
+createMovies()
 
 module.exports = router
