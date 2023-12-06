@@ -3,6 +3,7 @@ const router = express.Router();
 const { MovieModel } = require('../model/bd');
 
 router.get('/', async (req, res) => {
+    // #swagger.summary = 'Movies page, see all the movies, no login needed everyone can see the catalogue' 
     try {
         const movies = await MovieModel.findAll();
         res.json({ count: movies.length, lista: movies });

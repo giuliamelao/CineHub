@@ -5,10 +5,12 @@ const { MovieModel, UserModel } = require('../model/bd');
 
 
 router.get('/user-page', Auth.validator, (req, res) => {
-    res.json({ message: 'Welcome to the User Page! 🎬 Here you can view the movie list and leave a note or review!' });
+        // #swagger.summary = 'User Page, view and leave ratings and reviews for movies. Edit your personal info' 
+        res.json({ message: 'Welcome to the User Page! 🎬 Here you can view the movie list and leave a note or review!' });
 });
 
 router.put('/user-page/edit-info/:id', Auth.validator, async (req, res) => {
+        // #swagger.summary = 'User can edit personal info here' 
         try {
                 const userId = req.params.id;
                 const { password, nome } = req.body;

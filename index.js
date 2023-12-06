@@ -31,6 +31,11 @@ app.post('/login', LoginRouter)
 const SignupRouter = require('./routes/signup');
 app.post('/signup', SignupRouter);
 
+const swaggerUi = require('swagger-ui-express')
+const swaggerFile = require('./swagger_doc.json')
+
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile))
+
 
 app.use(function(err, req, res, next) {
   res.locals.message = err.message;

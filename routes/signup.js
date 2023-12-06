@@ -3,6 +3,7 @@ const router = express.Router();
 const { UserModel } = require('../model/bd');
 
 router.post('/signup', async (req, res) => {
+    // #swagger.summary = 'Sign Up page, allow users to create an account and verify disponibility of username' 
     try {
         const { nome, username, password } = req.body;
 

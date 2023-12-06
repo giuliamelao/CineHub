@@ -5,11 +5,13 @@ const { UserModel } = require('../model/bd')
 const Auth = require('../helpers/Auth');
 
 router.get('/admin-page', Auth.validator, (req, res) => {
-    res.json({ message: 'Welcome to the Admin Page! 👑 Here you can add and delete Moderators' });
+        // #swagger.summary = 'Admin Page, access to routes to add, delete, edit mods and users' 
+        res.json({ message: 'Welcome to the Admin Page! 👑 Here you can add and delete Moderators' });
 });
 
 
 router.post('/admin-page/add-admin', Auth.isAdmin, async (req, res) => {
+        // #swagger.summary = 'Route to add other admins, only admins can access' 
         try {
                 const { nome, username, password } = req.body;
                 const newAdmin = await UserModel.create({
@@ -31,6 +33,7 @@ router.post('/admin-page/add-admin', Auth.isAdmin, async (req, res) => {
 
 
 router.post('/admin-page/add-moderator', Auth.isAdmin, async (req, res) => {
+        // #swagger.summary = 'Page to add moderators, only admin can access' 
         try {
                 const { nome, username, password } = req.body;
                 const newModerator = await UserModel.create({
@@ -53,6 +56,7 @@ router.post('/admin-page/add-moderator', Auth.isAdmin, async (req, res) => {
 
     
 router.delete('/admin-page/delete-moderator/:id', Auth.isAdmin, async (req, res) => {
+        // #swagger.summary = 'Page to delete moderators, only admin can access' 
         try {
                 const moderatorId = req.params.id;
                 const deletedModerator = await UserModel.destroy({
@@ -76,6 +80,7 @@ router.delete('/admin-page/delete-moderator/:id', Auth.isAdmin, async (req, res)
 
 
 router.delete('/admin-page/delete-user/:id', Auth.isAdmin, async (req, res) => {
+        // #swagger.summary = 'Page to delete users, admin and moderator can access' 
         try {
                 const userId = req.params.id;
                 const deletedUser = await UserModel.destroy({
@@ -97,6 +102,7 @@ router.delete('/admin-page/delete-user/:id', Auth.isAdmin, async (req, res) => {
 });
 
 router.put('/admin-page/edit-user-info/:id', Auth.isAdmin, async (req, res) => {
+        // #swagger.summary = 'Page to edit user info, admin and moderator can access' 
         try {
                 const userId = req.params.id;
                 const { password, nome } = req.body;

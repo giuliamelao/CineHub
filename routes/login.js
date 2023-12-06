@@ -6,6 +6,7 @@ const { UserModel } = require('../model/bd');
 
 
 router.post('/login', async (req, res) => {
+    // #swagger.summary = 'login, access for admin, mods and users' 
     try {
         let { username, password } = req.body;
 

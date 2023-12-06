@@ -5,6 +5,7 @@ const {sequelize, MovieModel} = require('../model/bd')
 
 
 router.get('/install', async function(req, res, next) {
+        // #swagger.summary = 'Install page to update database and add user, admin, mod and movies' 
         await sequelize.sync({force: true})
         res.json({mensagem: "Hello Giulia 🦊🦝, database updated"})
 })

@@ -5,10 +5,12 @@ const { MovieModel } = require('../model/bd');
 
 
 router.get('/mod-page', Auth.validator, (req, res) => {
-    res.json({ message: 'Welcome to the Mod Page! 🎬 Here you can manage Movies. (you may delete users if you wish)' });
+        // #swagger.summary = 'Mod Page, add, edit, delete and view movies. Also edit or delete users' 
+        res.json({ message: 'Welcome to the Mod Page! 🎬 Here you can manage Movies. (you may delete users if you wish)' });
 });
 
 router.delete('/mod-page/delete-user/:id', Auth.validator, async (req, res) => {
+        // #swagger.summary = 'Page to delete users, admin and moderator can access' 
         try {
                 const userId = req.params.id;
                 const deletedUser = await UserModel.destroy({
@@ -30,6 +32,7 @@ router.delete('/mod-page/delete-user/:id', Auth.validator, async (req, res) => {
 });
 
 router.put('/mod-page/edit-user-info/:id', Auth.isAdmin, async (req, res) => {
+        // #swagger.summary = 'Page to edit user info, admin and moderator can access' 
         try {
                 const userId = req.params.id;
                 const { password, nome } = req.body;
@@ -54,6 +57,7 @@ router.put('/mod-page/edit-user-info/:id', Auth.isAdmin, async (req, res) => {
 
 
 router.get('/mod-page/movies', Auth.validator, async (req, res) => {
+        // #swagger.summary = 'View all movies, limit movies per page and choose the number of page by body params' 
         try {
             const { limit, page } = req.body;
             const offset = (page - 1) * limit;
@@ -71,6 +75,7 @@ router.get('/mod-page/movies', Auth.validator, async (req, res) => {
 });
     
 router.post('/mod-page/add-movie', Auth.validator, async (req, res) => {
+        // #swagger.summary = 'Add movies, only moderators' 
         try {
                 const { title, year, director, genre } = req.body;
                 const newMovie = await MovieModel.create({ title, year, director, genre });
@@ -82,6 +87,7 @@ router.post('/mod-page/add-movie', Auth.validator, async (req, res) => {
 });
     
 router.put('/mod-page/edit-movie/:id', Auth.validator, async (req, res) => {
+        // #swagger.summary = 'Edit movies, only moderators' 
         try {
                 const movieId = req.params.id;
                 const { title, year, director, genre } = req.body;
@@ -103,6 +109,7 @@ router.put('/mod-page/edit-movie/:id', Auth.validator, async (req, res) => {
 });
     
 router.delete('/mod-page/delete-movie/:id', Auth.validator, async (req, res) => {
+        // #swagger.summary = 'Delete movies, only moderators'
         try {
                 const movieId = req.params.id;
                 const deletedMovie = await MovieModel.destroy({ where: { movie_id: movieId } });
